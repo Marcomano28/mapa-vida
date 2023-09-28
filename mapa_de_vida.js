@@ -7,6 +7,20 @@ let lago;
 let lago1;
 let sam;
 let samiyo;
+
+var x=0,y=0;
+var stp=5;
+var sz=2;
+var dst=0;
+var cnt=0;
+var letra="........distancia.............";
+var pg;
+//
+const txt="Grimnitzsee";
+const sg=200;
+let cx,cy,fsz,inr,r;
+let fn;
+//
 function preload(){
   ima=loadImage("data/map.JPG");
   samiyo=loadImage("data/samiyo.jpeg");
@@ -19,32 +33,89 @@ function preload(){
   casa=loadImage("data/casa.jpeg");
   camino=loadImage("data/camino.jpeg");
 }
-function setup() {
-createCanvas(724,724);
-background(200,200,120);
-preload();
+function pnti(pct){
+  const nsc=.5;
+  let ang=pct*TWO_PI;
+  let cang=cos(ang);
+  let sang=sin(ang);
+  let t=frameCount*.005;
+  let ns=noise(nsc*cang+nsc,nsc*sang+nsc,t);
+  let rd=inr+r*ns;
+  return {
+    x:rd*cang+cx,
+    y:rd*sang+cy
+  };
 }
-let crzx=666;
-let crzy=497;
-let iyox=479;
-let iyoy=104;
-let xpox=96;
-let xpoy=122;
-let csax=673;
-let csay=659;
-let cmnx=132;
-let cmny=413;
-let samx=109;
-let samy=460;
-let lgx=668;
-let lgy=41;
-let lg1x=47;
-let lg1y=659;
-let c=16;//sz
-
+function setup() {
+  createCanvas(724,724);
+  preload();
+  pg=createGraphics(724,724);
+  pg.background(250,0);
+  fn=loadFont("prescl.ttf");
+  smooth();
+  cursor(CROSS);
+  x=mouseX;
+  y=mouseY;
+  pg.textAlign(LEFT);
+  pg.fill(255,220);
+    
+  cx=120;
+  cy=650;
+  let cpt=min(height,width)/1000;
+  fsz=cpt*90;
+  inr=cpt*20;
+  r=cpt*200;
+  textFont("Helvetica");
+  textSize(fsz);
+  }
+  let crzx=666;
+  let crzy=497;
+  let iyox=479;
+  let iyoy=104;
+  let xpox=96;
+  let xpoy=122;
+  let csax=673;
+  let csay=659;
+  let cmnx=132;
+  let cmny=413;
+  let samx=109;
+  let samy=460;
+  let lgx=668;
+  let lgy=41;
+  let lg1x=47;
+  let lg1y=659;
+  let c=16;
 function draw() {
-ellipse(mouseX,mouseY,100,100);
 image(ima,0,0);
+
+fill(0,120,180,50);
+noStroke();
+beginShape();
+for(let i=0;i<sg;i++){
+  let p0=pnti(i/sg);
+  vertex(p0.x,p0.y);
+}
+endShape(CLOSE);
+let pct=PI+atan2(mouseX-(cx*2),mouseY-(cy*2))/TWO_PI;
+//let pct=-10;
+let px=1/((inr+r/3)*TWO_PI);
+for(var i=0;i<txt.length;i++){
+  let cw=textWidth(txt.charAt(i));
+  pct+=cw/2*px;
+  let lft=pnti(pct-.001);
+  let rgt=pnti(pct+.001);
+  let ang=atan2(lft.y-rgt.y,lft.x-rgt.x)+PI;
+  push();
+  let p=pnti(pct);
+  translate(p.x,p.y);
+  rotate(ang);
+  translate(-p.x,-p.y);
+  stroke(255);
+  strokeWeight(1);
+  text(txt.charAt(i),p.x-cw/2,p.y);
+  pop();
+  pct+=cw/12*px;
+}
 fill(200,240,120,120);
 ellipse(crzx,crzy,c,c);
 fill(250,240,80,120);
@@ -61,95 +132,243 @@ fill(20,240,20,80);
 ellipse(lgx,lgy,c,c);
 fill(20,20,220,80);
 ellipse(lg1x,lg1y,c,c);
-if (mouseX > iyox - 8 && mouseX < iyox + 8 && 
-    mouseY > iyoy - 8 && mouseY < iyoy + 8) {
-        
-    rect(iyox-220, iyoy-55, 320, 320);
+if (mouseX > iyox - 88 && mouseX < iyox + 88 && 
+    mouseY > iyoy - 88 && mouseY < iyoy + 88) {
+    let d=dist(mouseX,mouseY,iyox,iyoy);
+       push();
+       translate(iyox,iyoy);
+    scale(constrain(map(d,0,48,1,0),0,1));       
+    rect(-220,-55, 320, 320);
     fill(0);
-   
-    loadImage("cruz.jpeg");
+    //loadImage("samiyo.jpeg");
     samiyo.resize(320,320);
-    image(samiyo, iyox-220, iyoy -55);
-   
+    image(samiyo,-220,-55);
       }
-      if (mouseX > crzx - 8 && mouseX < crzx + 8 && 
-    mouseY > crzy - 8 && mouseY < crzy + 8) {
-        
-    rect(crzx-220, crzy-155, 220, 150);
+	  pop();
+      if (mouseX > crzx - 48 && mouseX < crzx + 48 && 
+    mouseY > crzy - 48 && mouseY < crzy + 48) {
+		let	d=dist(mouseX,mouseY,crzx,crzy);
+		push();
+    translate(crzx,crzy);
+    scale(constrain(map(d,0,48,1,0),0,1));     
+    rect(-220,-155, 220, 150);
     fill(0);
-   
-    loadImage("cruz.jpeg");
     cruz.resize(280,210);
-    image(cruz, crzx-220, crzy -155);
-   
+    image(cruz,-220, -155);
       }
-      if (mouseX > csax - 8 && mouseX < csax + 8 && 
-    mouseY > csay - 8 && mouseY < csay + 8) {
-        
-    rect(csax-220, csay-155, 220, 220);
+	  pop();
+    if (mouseX > csax - 58 && mouseX < csax + 58 && 
+    mouseY > csay - 58 && mouseY < csay + 58) {
+		let	d=dist(mouseX,mouseY,csax,csay);
+		push();
+		translate(csax,csay);
+    scale(constrain(map(d,0,48,1,0),0,1));     
+    rect(-270,-155, 220, 220);
     fill(0);
-   
-    loadImage("casa.jpeg");
     casa.resize(320,320);
-    image(casa, csax-220, csay -155);
-   
+    image(casa,-270,-155);
       }
-       if (mouseX > xpox - 8 && mouseX < xpox + 8 && 
-    mouseY > xpoy - 8 && mouseY < xpoy + 8) {
-        
-    rect(xpox-120, xpoy-140, 180, 220);
+	  pop();
+       if (mouseX > xpox - 48 && mouseX < xpox + 48 && 
+    mouseY > xpoy - 48 && mouseY < xpoy + 48) {
+		let d=dist(mouseX,mouseY,xpox,xpoy);
+		 push();
+		translate(xpox,xpoy);
+    scale(constrain(map(d,0,48,1,0),0,1));     
+    rect(-100,-128, 180, 220);
     fill(0);
-   
-    loadImage("expo.jpeg");
-    expo.resize(180,220);
-    image(expo, xpox-120, xpoy -140);
-   
-      }
-      if (mouseX > cmnx - 8 && mouseX < cmnx + 8 && 
-    mouseY > cmny - 8 && mouseY < cmny + 8) {
-        
-    rect(cmnx-120, cmny-155, 220, 280);
+    expo.resize(200,250);
+    image(expo,-100,-128);
+			 }
+    pop();
+      if (mouseX > cmnx - 48 && mouseX < cmnx + 48 && 
+    mouseY > cmny - 48 && mouseY < cmny + 48) {
+		d=dist(mouseX,mouseY,cmnx,cmny);
+			push();
+		translate(cmnx,cmny);
+    scale(constrain(map(d,0,48,1,0),0,1));     
+    rect(-120,-155, 220, 280);
     fill(0);
-   
-    loadImage("camino.jpeg");
     camino.resize(220,280);
-    image(camino, cmnx-120, cmny -155);
-   
-      }
-      if (mouseX > samx - 8 && mouseX < samx + 8 && 
-    mouseY > samy - 8 && mouseY < samy + 8) {
-        
-    rect(samx-98, samy-108, 225, 270);
+    image(camino,-120,-155);
+			}
+     pop();
+      if (mouseX > samx - 48 && mouseX < samx + 48 && 
+    mouseY > samy - 48 && mouseY < samy + 48) {
+		let	d=dist(mouseX,mouseY,samx,samy);
+		 push();
+		translate(samx,samy);
+    scale(constrain(map(d,0,48,1,0),0,1));     
+    rect(-98,-108, 235, 280);
     fill(0);
-   
-    loadImage("sam.jpeg");
-    sam.resize(225,270);
-    image(sam, samx-98, samy -108);
-   
-      }
-       if (mouseX > lgx - 8 && mouseX < lgx + 8 && 
-    mouseY > lgy - 8 && mouseY < lgy + 8) {
-        
-    rect(lgx-180, lgy-45, 230, 280);
+    sam.resize(235,280);
+    image(sam,-98,-108);
+			}
+     pop();
+       if (mouseX > lgx - 48 && mouseX < lgx + 48 && 
+    mouseY > lgy - 48 && mouseY < lgy + 48) {
+		let	d=dist(mouseX,mouseY,lgx,lgy);
+		 push();
+		translate(lgx,lgy);
+    scale(constrain(map(d,0,48,1,0),0,1));     
+    rect(-150,-35, 200, 280);
     fill(0);
-   
-    loadImage("lago.jpeg");
-    lago.resize(230,280);
-    image(lago, lgx-180, lgy -45);
-   
-      }
-       if (mouseX > lg1x - 8 && mouseX < lg1x + 8 && 
-    mouseY > lg1y - 8 && mouseY < lg1y + 8) {
-        
-    rect(lg1x-40, lg1y-145, 280, 200);
+    lago.resize(200,280);
+    image(lago,-150,-35);
+			 }
+     pop();
+       if (mouseX > lg1x - 48 && mouseX < lg1x + 48 && 
+    mouseY > lg1y - 48 && mouseY < lg1y + 48) {
+		let	d=dist(mouseX,mouseY,lg1x,lg1y);
+			push();
+		translate(lg1x,lg1y);
+    scale(constrain(map(d,0,48,1,0),0,1));     
+    rect(-40,-140, 280, 200);
     fill(0);
-   
-    loadImage("lago1.jpeg");
-    lago1.resize(280,200);
-    image(lago1, lg1x-40, lg1y -145);
-   
-      }
+    lago1.resize(290,210);
+    image(lago1,-40,-140);
+			 }
+     pop();
+	 if (mouseOver) {
+     var d=dist(x,y,mouseX,mouseY);
+    pg.textFont(fn);
+    pg.textSize(sz+((d/2)/2));
+    var nw=letra.charAt(cnt);
+    stp=pg.textWidth(nw);
+    if(d>stp){
+      var ang=atan2(mouseY-y,mouseX-x);
+      pg.push();
+      pg.translate(x,y);
+      pg.rotate(ang+random(dst));
+      pg.strokeWeight(1);
+      pg.stroke(255,200,0,20);
+      pg.text(nw,0,0);
+      pg.pop();
+      cnt++;
+      if(cnt>letra.length-1)cnt=0;
+      x=x+cos(ang)*stp;
+      y=y+sin(ang)*stp;
       
-  }
+    }
+  }  
+  image(pg,0,0);
+}
+function mouseOver(){
+  x=mouseX;
+  y=mouseY;
+}
+function mousePressed(){
+  setup();
+
+}s
+// function draw() {
+// ellipse(mouseX,mouseY,100,100);
+// image(ima,0,0);
+// fill(200,240,120,120);
+// ellipse(crzx,crzy,c,c);
+// fill(250,240,80,120);
+// ellipse(iyox,iyoy,c,c);
+// fill(20,240,120,120);
+// ellipse(xpox,xpoy,c,c);
+// fill(20,140,220,120);
+// ellipse(csax,csay,c,c);
+// fill(20,40,120,120);
+// ellipse(cmnx,cmny,c,c);
+// fill(200,40,120,120);
+// ellipse(samx,samy,c,c);
+// fill(20,240,20,80);
+// ellipse(lgx,lgy,c,c);
+// fill(20,20,220,80);
+// ellipse(lg1x,lg1y,c,c);
+// if (mouseX > iyox - 8 && mouseX < iyox + 8 && 
+//     mouseY > iyoy - 8 && mouseY < iyoy + 8) {
+        
+//     rect(iyox-220, iyoy-55, 320, 320);
+//     fill(0);
+   
+//     loadImage("cruz.jpeg");
+//     samiyo.resize(320,320);
+//     image(samiyo, iyox-220, iyoy -55);
+   
+//       }
+//       if (mouseX > crzx - 8 && mouseX < crzx + 8 && 
+//     mouseY > crzy - 8 && mouseY < crzy + 8) {
+        
+//     rect(crzx-220, crzy-155, 220, 150);
+//     fill(0);
+   
+//     loadImage("cruz.jpeg");
+//     cruz.resize(280,210);
+//     image(cruz, crzx-220, crzy -155);
+   
+//       }
+//       if (mouseX > csax - 8 && mouseX < csax + 8 && 
+//     mouseY > csay - 8 && mouseY < csay + 8) {
+        
+//     rect(csax-220, csay-155, 220, 220);
+//     fill(0);
+   
+//     loadImage("casa.jpeg");
+//     casa.resize(320,320);
+//     image(casa, csax-220, csay -155);
+   
+//       }
+//        if (mouseX > xpox - 8 && mouseX < xpox + 8 && 
+//     mouseY > xpoy - 8 && mouseY < xpoy + 8) {
+        
+//     rect(xpox-120, xpoy-140, 180, 220);
+//     fill(0);
+   
+//     loadImage("expo.jpeg");
+//     expo.resize(180,220);
+//     image(expo, xpox-120, xpoy -140);
+   
+//       }
+//       if (mouseX > cmnx - 8 && mouseX < cmnx + 8 && 
+//     mouseY > cmny - 8 && mouseY < cmny + 8) {
+        
+//     rect(cmnx-120, cmny-155, 220, 280);
+//     fill(0);
+   
+//     loadImage("camino.jpeg");
+//     camino.resize(220,280);
+//     image(camino, cmnx-120, cmny -155);
+   
+//       }
+//       if (mouseX > samx - 8 && mouseX < samx + 8 && 
+//     mouseY > samy - 8 && mouseY < samy + 8) {
+        
+//     rect(samx-98, samy-108, 225, 270);
+//     fill(0);
+   
+//     loadImage("sam.jpeg");
+//     sam.resize(225,270);
+//     image(sam, samx-98, samy -108);
+   
+//       }
+//        if (mouseX > lgx - 8 && mouseX < lgx + 8 && 
+//     mouseY > lgy - 8 && mouseY < lgy + 8) {
+        
+//     rect(lgx-180, lgy-45, 230, 280);
+//     fill(0);
+   
+//     loadImage("lago.jpeg");
+//     lago.resize(230,280);
+//     image(lago, lgx-180, lgy -45);
+   
+//       }
+//        if (mouseX > lg1x - 8 && mouseX < lg1x + 8 && 
+//     mouseY > lg1y - 8 && mouseY < lg1y + 8) {
+        
+//     rect(lg1x-40, lg1y-145, 280, 200);
+//     fill(0);
+   
+//     loadImage("lago1.jpeg");
+//     lago1.resize(280,200);
+//     image(lago1, lg1x-40, lg1y -145);
+   
+//       }
+      
+//   }
   
     
