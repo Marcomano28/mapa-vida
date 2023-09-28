@@ -8,13 +8,14 @@ let lago1;
 let sam;
 let samiyo;
 
-var x=0,y=0;
-var stp=5;
-var sz=2;
-var dst=0;
-var cnt=0;
-var letra="........distancia.............";
-var pg;
+let x=0,y=0;
+let stp=5;
+let sz=1.2;
+let dst=0;
+let cnt=0;
+let letra="......distancia......";
+let angDist=0;
+let pg;
 //
 const txt="Grimnitzsee";
 const sg=200;
@@ -65,6 +66,8 @@ function setup() {
   fsz=cpt*90;
   inr=cpt*20;
   r=cpt*200;
+  // pg.textFont(fn);
+  // pg.textSize(sz);
   textFont("Helvetica");
   textSize(fsz);
   }
@@ -228,31 +231,30 @@ if (mouseX > iyox - 88 && mouseX < iyox + 88 &&
     lago1.resize(290,210);
     image(lago1,-40,-140);
 			 }
-     pop();
-	 if (mouseOver) {
-     var d=dist(x,y,mouseX,mouseY);
-    pg.textFont(fn);
-    pg.textSize(sz+((d/2)/2));
-    var nw=letra.charAt(cnt);
-    stp=pg.textWidth(nw);
-    if(d>stp){
-      var ang=atan2(mouseY-y,mouseX-x);
-      pg.push();
-      pg.translate(x,y);
-      pg.rotate(ang+random(dst));
-      pg.strokeWeight(1);
-      pg.stroke(255,200,0,20);
-      pg.text(nw,0,0);
-      pg.pop();
-      cnt++;
-      if(cnt>letra.length-1)cnt=0;
-      x=x+cos(ang)*stp;
-      y=y+sin(ang)*stp;
+       if (mouseOver) {
+        var d=dist(x,y,mouseX,mouseY);
+        pg.textSize(sz+(d/1.3));
+        pg.fill(255,100);
+        pg.stroke(5,255);
+        let nwl=letra.charAt(cnt);
+        stp=pg.textWidth(nwl);
+
+        if(d>stp){
+          let ang=atan2(mouseY-y,mouseX-x);
+          pg.push();
+          pg.translate(x,y);
+          pg.rotate(ang+random(angDist));
+          pg.text(nwl,0,0);
+          pg.pop();
+          cnt++;
+          if(cnt>=letra.length)cnt=0;
+          x=x+cos(ang)*stp;
+          y=y+sin(ang)*stp;
+        }
+      }
+      image(pg,0,0);
+     } 
       
-    }
-  }  
-  image(pg,0,0);
-}
 function mouseOver(){
   x=mouseX;
   y=mouseY;
