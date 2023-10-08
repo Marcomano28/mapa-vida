@@ -47,9 +47,11 @@ function pnti(pct){
     y:rd*sang+cy
   };
 }
+let ö=300;
 function setup() {
-  createCanvas(724,724);
+  createCanvas(windowWidth,windowHeight);
   preload();
+  
   pg=createGraphics(724,724);
   pg.background(250,0);
   fn=loadFont("prescl.ttf");
@@ -89,14 +91,16 @@ function setup() {
   let lg1y=659;
   let c=16;
 function draw() {
-image(ima,0,0);
+background(40);
+ima.resize(744,700);
+image(ima,ö,0);
 
 fill(0,120,180,50);
 noStroke();
 beginShape();
 for(let i=0;i<sg;i++){
   let p0=pnti(i/sg);
-  vertex(p0.x,p0.y);
+  vertex(p0.x+ö,p0.y);
 }
 endShape(CLOSE);
 let pct=PI+atan2(mouseX-(cx*2),mouseY-(cy*2))/TWO_PI;
@@ -110,7 +114,7 @@ for(var i=0;i<txt.length;i++){
   let ang=atan2(lft.y-rgt.y,lft.x-rgt.x)+PI;
   push();
   let p=pnti(pct);
-  translate(p.x,p.y);
+  translate(p.x+ö,p.y);
   rotate(ang);
   translate(-p.x,-p.y);
   stroke(255);
@@ -120,26 +124,26 @@ for(var i=0;i<txt.length;i++){
   pct+=cw/12*px;
 }
 fill(200,240,120,120);
-ellipse(crzx,crzy,c,c);
+ellipse(crzx+ö,crzy,c,c);
 fill(250,240,80,120);
-ellipse(iyox,iyoy,c,c);
+ellipse(iyox+ö,iyoy,c,c);
 fill(20,240,120,120);
-ellipse(xpox,xpoy,c,c);
+ellipse(xpox+ö,xpoy,c,c);
 fill(20,140,220,120);
-ellipse(csax,csay,c,c);
+ellipse(csax+ö,csay,c,c);
 fill(20,40,120,120);
-ellipse(cmnx,cmny,c,c);
+ellipse(cmnx+ö,cmny,c,c);
 fill(200,40,120,120);
-ellipse(samx,samy,c,c);
+ellipse(samx+ö,samy,c,c);
 fill(20,240,20,80);
-ellipse(lgx,lgy,c,c);
+ellipse(lgx+ö,lgy,c,c);
 fill(20,20,220,80);
-ellipse(lg1x,lg1y,c,c);
-if (mouseX > iyox - 88 && mouseX < iyox + 88 && 
+ellipse(lg1x+ö,lg1y,c,c);
+if (mouseX > iyox +ö- 88 && mouseX < iyox +ö+ 88 && 
     mouseY > iyoy - 88 && mouseY < iyoy + 88) {
-    let d=dist(mouseX,mouseY,iyox,iyoy);
+    let d=dist(mouseX,mouseY,iyox+ö,iyoy);
        push();
-       translate(iyox,iyoy);
+       translate(iyox+ö,iyoy);
     scale(constrain(map(d,0,48,1,0),0,1));       
     rect(-220,-55, 320, 320);
     fill(0);
@@ -148,11 +152,11 @@ if (mouseX > iyox - 88 && mouseX < iyox + 88 &&
     image(samiyo,-220,-55);
       }
 	  pop();
-      if (mouseX > crzx - 48 && mouseX < crzx + 48 && 
+      if (mouseX > crzx+ö - 48 && mouseX < crzx+ö + 48 && 
     mouseY > crzy - 48 && mouseY < crzy + 48) {
-		let	d=dist(mouseX,mouseY,crzx,crzy);
+		let	d=dist(mouseX,mouseY,crzx+ö,crzy);
 		push();
-    translate(crzx,crzy);
+    translate(crzx+ö,crzy);
     scale(constrain(map(d,0,48,1,0),0,1));     
     rect(-220,-155, 220, 150);
     fill(0);
@@ -160,11 +164,11 @@ if (mouseX > iyox - 88 && mouseX < iyox + 88 &&
     image(cruz,-220, -155);
       }
 	  pop();
-    if (mouseX > csax - 58 && mouseX < csax + 58 && 
+    if (mouseX > csax +ö- 58 && mouseX < csax+ö + 58 && 
     mouseY > csay - 58 && mouseY < csay + 58) {
-		let	d=dist(mouseX,mouseY,csax,csay);
+		let	d=dist(mouseX,mouseY,csax+ö,csay);
 		push();
-		translate(csax,csay);
+		translate(csax+ö,csay);
     scale(constrain(map(d,0,48,1,0),0,1));     
     rect(-270,-155, 220, 220);
     fill(0);
@@ -172,11 +176,11 @@ if (mouseX > iyox - 88 && mouseX < iyox + 88 &&
     image(casa,-270,-155);
       }
 	  pop();
-       if (mouseX > xpox - 48 && mouseX < xpox + 48 && 
+       if (mouseX > xpox +ö- 48 && mouseX < xpox+ö + 48 && 
     mouseY > xpoy - 48 && mouseY < xpoy + 48) {
-		let d=dist(mouseX,mouseY,xpox,xpoy);
+		let d=dist(mouseX,mouseY,xpox+ö,xpoy);
 		 push();
-		translate(xpox,xpoy);
+		translate(xpox+ö,xpoy);
     scale(constrain(map(d,0,48,1,0),0,1));     
     rect(-100,-128, 180, 220);
     fill(0);
@@ -184,11 +188,11 @@ if (mouseX > iyox - 88 && mouseX < iyox + 88 &&
     image(expo,-100,-128);
 			 }
     pop();
-      if (mouseX > cmnx - 48 && mouseX < cmnx + 48 && 
+      if (mouseX > cmnx+ö - 48 && mouseX < cmnx+ö + 48 && 
     mouseY > cmny - 48 && mouseY < cmny + 48) {
-		d=dist(mouseX,mouseY,cmnx,cmny);
+		d=dist(mouseX,mouseY,cmnx+ö,cmny);
 			push();
-		translate(cmnx,cmny);
+		translate(cmnx+ö,cmny);
     scale(constrain(map(d,0,48,1,0),0,1));     
     rect(-120,-155, 220, 280);
     fill(0);
@@ -196,11 +200,11 @@ if (mouseX > iyox - 88 && mouseX < iyox + 88 &&
     image(camino,-120,-155);
 			}
      pop();
-      if (mouseX > samx - 48 && mouseX < samx + 48 && 
+      if (mouseX > samx +ö- 48 && mouseX < samx +ö+ 48 && 
     mouseY > samy - 48 && mouseY < samy + 48) {
-		let	d=dist(mouseX,mouseY,samx,samy);
+		let	d=dist(mouseX,mouseY,samx+ö,samy);
 		 push();
-		translate(samx,samy);
+		translate(samx+ö,samy);
     scale(constrain(map(d,0,48,1,0),0,1));     
     rect(-98,-108, 235, 280);
     fill(0);
@@ -208,11 +212,11 @@ if (mouseX > iyox - 88 && mouseX < iyox + 88 &&
     image(sam,-98,-108);
 			}
      pop();
-       if (mouseX > lgx - 48 && mouseX < lgx + 48 && 
+       if (mouseX > lgx +ö- 48 && mouseX < lgx+ö + 48 && 
     mouseY > lgy - 48 && mouseY < lgy + 48) {
-		let	d=dist(mouseX,mouseY,lgx,lgy);
+		let	d=dist(mouseX,mouseY,lgx+ö,lgy);
 		 push();
-		translate(lgx,lgy);
+		translate(lgx+ö,lgy);
     scale(constrain(map(d,0,48,1,0),0,1));     
     rect(-150,-35, 200, 280);
     fill(0);
@@ -220,11 +224,11 @@ if (mouseX > iyox - 88 && mouseX < iyox + 88 &&
     image(lago,-150,-35);
 			 }
      pop();
-       if (mouseX > lg1x - 48 && mouseX < lg1x + 48 && 
+       if (mouseX > lg1x +ö && mouseX < lg1x +ö+ 48 && 
     mouseY > lg1y - 48 && mouseY < lg1y + 48) {
-		let	d=dist(mouseX,mouseY,lg1x,lg1y);
+		let	d=dist(mouseX,mouseY,lg1x+ö,lg1y);
 			push();
-		translate(lg1x,lg1y);
+		translate(lg1x+ö,lg1y-20);
     scale(constrain(map(d,0,48,1,0),0,1));     
     rect(-40,-140, 280, 200);
     fill(0);
@@ -242,7 +246,7 @@ if (mouseX > iyox - 88 && mouseX < iyox + 88 &&
         if(d>stp){
           let ang=atan2(mouseY-y,mouseX-x);
           pg.push();
-          pg.translate(x,y);
+          pg.translate(x-ö,y);
           pg.rotate(ang+random(angDist));
           pg.text(nwl,0,0);
           pg.pop();
@@ -252,17 +256,17 @@ if (mouseX > iyox - 88 && mouseX < iyox + 88 &&
           y=y+sin(ang)*stp;
         }
       }
-      image(pg,0,0);
+      image(pg,ö,0);
      } 
       
 function mouseOver(){
-  x=mouseX;
-  y=mouseY;
+  x=mouseX+ö;
+  y=mouseY+ö;
 }
 function mousePressed(){
   setup();
 
-}s
+}
 // function draw() {
 // ellipse(mouseX,mouseY,100,100);
 // image(ima,0,0);
