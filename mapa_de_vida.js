@@ -23,16 +23,16 @@ let cx,cy,fsz,inr,r;
 let fn;
 //
 function preload(){
-  ima=loadImage("data/map.JPG");
-  samiyo=loadImage("data/samiyo.jpeg");
-  sam=loadImage("data/sam.jpeg");
-  samiyo=loadImage("data/samiyo.jpeg");
-  lago1=loadImage("data/lago1.jpeg");
-  lago=loadImage("data/lago.jpeg");
-  expo=loadImage("data/expo.jpeg");
-  cruz=loadImage("data/cruz.jpeg");
-  casa=loadImage("data/casa.jpeg");
-  camino=loadImage("data/camino.jpeg");
+  ima=loadImage("/map.JPG");
+  samiyo=loadImage("/samiyo.jpeg");
+  sam=loadImage("/sam.jpeg");
+  samiyo=loadImage("/samiyo.jpeg");
+  lago1=loadImage("/lago1.jpeg");
+  lago=loadImage("/lago.jpeg");
+  expo=loadImage("/expo.jpeg");
+  cruz=loadImage("/cruz.jpeg");
+  casa=loadImage("/casa.jpeg");
+  camino=loadImage("/camino.jpeg");
 }
 function pnti(pct){
   const nsc=.5;
