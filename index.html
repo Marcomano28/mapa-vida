@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Content-Type" content="application/javascript">
+    <!-- <meta http-equiv="Content-Type" content="application/javascript"> -->
     <title>Camino de vida</title>
     <style> 
      body { 
@@ -17,7 +17,16 @@
   </head>
   <body>
     <div id="sketch-holder"></div>
-    <script src="mapa_de_vida.js"></script>
+    <script>
+      fetch('mapa_de_vida.js')
+          .then(response => response.text())
+          .then(code => {
+              var script = document.createElement('script');
+              script.textContent = code;
+              document.head.appendChild(script);
+          })
+          .catch(error => console.error('Error loading the script:', error));
+  </script>
   </body>
 </html>
 
