@@ -63,7 +63,7 @@ let scaleFactor;
 function setup() {
   const sideLength = min(windowWidth, windowHeight);
   canvas = createCanvas(sideLength, sideLength);
-  canvas.position((windowWidth - sideLength) / 2, (windowHeight - sideLength) / 2);
+  canvas.parent('sketch-holder');
   scaleFactor = sideLength / 800;
   pixelDensity(1);
   

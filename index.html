@@ -12,13 +12,18 @@
         box-sizing: border-box;
         background-color: bisque;
       }
+      #sketch-holder {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.2.0/p5.min.js"></script>
   </head>
   <body>
     <div id="sketch-holder"></div>
     <script>
-      fetch('mapa_de_vida.js')
+      fetch('/mapa_de_vida.js.p5.js')
           .then(response => response.text())
           .then(code => {
               var script = document.createElement('script');
