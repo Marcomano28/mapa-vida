@@ -140,7 +140,7 @@ function draw() {
     rotate(ang);
     translate(-p.x, -p.y);
     stroke(255);
-    strokeWeight(1);
+    strokeWeight(1.4);
     // textFont(fn);
     text(txt.charAt(i), p.x - cw / 2, p.y);
     pop();
@@ -264,7 +264,7 @@ function draw() {
     var d = dist(x, y, getX(), getY());
     pg.textSize(sz + (d / 1.3));
     pg.fill(255, 100);
-    pg.stroke(5, 255);
+    pg.stroke(5, 55);
     let nwl = letra.charAt(cnt);
     stp = pg.textWidth(nwl);
 
